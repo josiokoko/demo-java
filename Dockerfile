@@ -1,5 +1,11 @@
+FROM maven as Builder 
+WORKDIR /app
+RUN mvn clean install
+
+
 FROM tomcat:8.5
-LABEL EMAIL="j****@gmail.com"
+WORKDIR /app
+COPY --from=Builder /app/target/*.war ./
 
 RUN apt-get update && \
   apt-get install -y \
@@ -8,9 +14,8 @@ RUN apt-get update && \
     vim && \
   rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get purge
 
-RUN mvn clean install
 
-COPY target/*.war /usr/local/tomcat/webapps/demo.war
+COPY /app/target/*.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 8280
 CMD ["catalina.sh", "run"]

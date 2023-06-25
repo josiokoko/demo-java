@@ -8,6 +8,8 @@ RUN apt-get update && \
     vim && \
   rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get purge
 
+RUN mvn clean install
+
 COPY target/*.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 8280

@@ -7,7 +7,7 @@ FROM tomcat:8.5
 #     vim && \
 #   rm -rf /var/lib/apt/lists/* && apt-get clean && apt-get purge
 
-COPY /var/jenkins_home/workspace/demo-app/target/*.war /usr/local/tomcat/webapps/demo.war
+COPY target/*.war /usr/local/tomcat/webapps/demo.war
 
 EXPOSE 8280
 CMD ["catalina.sh", "run"]
